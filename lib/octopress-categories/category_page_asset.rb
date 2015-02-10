@@ -9,11 +9,8 @@ module Octopress
         self.category = category
       end
 
-      def clone(permalink_name, permalink, data={})
-        p = CategoryPageAsset.new(plugin, base, file)
-        p.permalink_name = permalink_name
-        p.permalink ||= permalink
-        p.data.merge!(data)
+      def clone(plugin, template, category)
+        p = CategoryPageAsset.new(plugin, template, category)
         p
       end
 
