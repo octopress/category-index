@@ -1,11 +1,12 @@
 require 'octopress-ink'
 require 'octopress-categories/version'
-#require 'octopress-categories/index_generator'
 require 'octopress-categories/category_page_asset'
 
 module Octopress
   module Categories
     class Plugin < Ink::Plugin
+
+      attr_reader :category_pages
 
       def initialize(options)
         super
@@ -54,24 +55,17 @@ module Octopress
 
       def createCategoryPages(template, config)
         categoryPages = []
-
-        category_base_dir = config['category_dir']
-        title_prefix = config['prefixes']['title'] || 'Category: '
-        meta_description_prefix = config['prefixes']['meta_description'] || 'Category: '
-
         Octopress.site.categories.keys.each do |category|
-          data = {
-            "category"=>category,
-            "title"=>"#{title_prefix}#{category.capitalize}",
-            "description"=>"#{meta_description_prefix}#{category.capitalize}"
-          }
-
-          p = CategoryPageAsset.new(self, template, category)
-          p.data.merge!(data)
-          categoryPages << p
+          categoryPages << CategoryPageAsset.new(self, template, category)
         end
         categoryPages
-      end      
+      end
+
+      def add_asset_files(options)
+        options << "category-pages"
+        super
+        
+      end
     end
   end
 end
