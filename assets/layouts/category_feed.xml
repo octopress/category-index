@@ -1,0 +1,7 @@
+{% assign feed_type = 'category' %}{% include feeds:head.xml %}
+{% for post in site.categories[page.category] limit: plugins.categories.feed_count %}
+  <entry>
+    {% include feeds:entry.xml %}
+  </entry>
+{% endfor %}
+</feed>

@@ -1,0 +1,23 @@
+---
+layout: page
+footer: false
+---
+
+<div id="blog-archives" class="category">
+{% for post in site.categories[page.category] %}
+	{% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
+	{% unless year == this_year %}
+	  {% assign year = this_year %}
+	  <h2>{{ year }}</h2>
+	{% endunless %}
+	<article>
+	  <h3><a href="{{ root_url }}{{ post.url }}">{% if site.titlecase %}{{ post.title | titlecase }}{% else %}{{ post.title }}{% endif %}</a></h3>
+	  <time datetime="{{ post.date | datetime | date_to_xmlschema }}" pubdate>{{ post.date | date: "<span class='month'>%b</span> <span class='day'>%d</span> <span class='year'>%Y</span>"}}</time>
+		{% if categoryNumber != '0' %}
+		<footer>
+		  <span class="categories">Posted in {{ post.categories | category_links }}</span>
+		</footer>
+		{% endif %}
+	</article>
+{% endfor %}
+</div>

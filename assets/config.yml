@@ -1,0 +1,7 @@
+category_dir: categories
+prefixes:
+  title: "Category: "
+  meta_description: "Category: "
+feed:
+  enabled: false
+  count: 5
