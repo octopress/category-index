@@ -3,7 +3,7 @@
 TODO: Write a gem description
 
 [![Build Status](http://img.shields.io/travis/octopress/categories.svg)](https://travis-ci.org/octopress/categories)
-[![Gem Version](http://img.shields.io/gem/v/octopress-categories.svg)](https://rubygems.org/gems/octopress-multilingual)
+[![Gem Version](http://img.shields.io/gem/v/octopress-categories.svg)](https://rubygems.org/gems/octopress-categories)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://octopress.mit-license.org)
 
 ## Installation
