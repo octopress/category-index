@@ -1,9 +1,8 @@
 ---
 layout: page
-footer: false
 ---
 
-<div id="blog-archives" class="category">
+<div class="category">
 {% for post in site.categories[page.category] %}
 	{% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
 	{% unless year == this_year %}
