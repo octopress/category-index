@@ -28,7 +28,7 @@ module Octopress
       end
 
       def permalink_name
-        name = slugifyCategory
+        name = plugin.slugifyCategory(category)
         if lang
           name = "#{name}-#{lang}"
         end
@@ -36,7 +36,7 @@ module Octopress
       end
 
       def permalink
-        link = "/#{category_dir}/"
+        link = "/#{plugin.category_dir}/"
         if lang
           link = "/#{lang}#{link}"
         end
@@ -58,14 +58,6 @@ module Octopress
 
       def lang
         data['lang']
-      end
-      def category_dir
-        category_base_dir = plugin.config['category_dir'].gsub(/^\/*(.*)\/*$/, '\1')
-        File.join(category_base_dir, slugifyCategory)
-      end
-
-      def slugifyCategory
-        category.gsub(/_|\P{Word}/, '-').gsub(/-{2,}/, '-').tr( '^A-Za-z0-9\-_', '-' ).downcase
       end
     end
   end

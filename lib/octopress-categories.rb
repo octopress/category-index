@@ -64,7 +64,15 @@ module Octopress
       def add_asset_files(options)
         options << "category-pages"
         super
-        
+      end
+
+      def category_dir(category)
+        category_base_dir = config['category_dir'].gsub(/^\/*(.*)\/*$/, '\1')
+        File.join(category_base_dir, slugifyCategory(category))
+      end
+
+      def slugifyCategory(category)
+        category.gsub(/_|\P{Word}/, '-').gsub(/-{2,}/, '-').tr( '^A-Za-z0-9\-_', '-' ).downcase
       end
     end
   end
