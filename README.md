@@ -41,7 +41,7 @@ Plugin: Octopress Categories - v0.0.1
 Slug: categories
 Category pages for Octopress and Jekyll pages.
 ================================================================================
- layouts:
+ includes:
   - category_feed.xml
   - category_index.html
 
@@ -76,9 +76,28 @@ only necessary if you want to modify this plugin's behavior.
 octopress ink copy categories
 ```
 
-This will copy the plugin's configuration and layouts from the gem, to your local site. If, for example, you want to change the HTML for a category's index, you can simply edit the `_plugins/layouts/category_index.html` file.
+This will copy the plugin's configuration and includes from the gem, to your local site. If, for example, you want to change the HTML for a category's index, you can simply edit the `_plugins/includes/category_index.html` file.
 
 If you want to revert to the defaults, simply delete any file you don't care to override from the `_plugins/categories/` directory.
+
+## Linking to the category pages
+
+This plugin includes a handy filter `category_links` that allows you to automatically link to a post's category pages.
+Here's how you use it:
+
+```
+{% capture num_categories %}{% if post %}{{ post.categories | size }}{% else %}{{ page.categories | size }}{% endif %}{% endcapture %}
+{% unless num_categories == '0' %}
+<span class="categories">
+  {% if post %}
+    {{ post.categories | category_links }}
+  {% else %}
+    {{ page.categories | category_links }}
+  {% endif %}
+</span>
+{% endunless %}
+
+```
 
 ## Configuration
 
@@ -92,7 +111,7 @@ This will create a configuration file populated with the defaults for this plugi
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/categories/fork )
+1. Fork it ( https://github.com/drallgood/octopress-categories/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

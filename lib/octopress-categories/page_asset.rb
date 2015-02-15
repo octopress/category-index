@@ -36,7 +36,7 @@ module Octopress
       end
 
       def permalink
-        link = "/#{plugin.category_dir}/"
+        link = "/#{plugin.category_dir(category)}/"
         if lang
           link = "/#{lang}#{link}"
         end
