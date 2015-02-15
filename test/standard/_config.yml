@@ -1,0 +1,8 @@
+exclude:
+  - Gemfile*
+name: Test site
+gems:
+  - octopress-categories
+timezone: UTC
+markdown: redcarpet
+permalink: /:year/:month/:day/:title/

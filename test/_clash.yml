@@ -1,0 +1,10 @@
+- 
+  title: Standard build
+  dir: standard
+  build: true
+  compare: _expected _site
+- 
+  title: Multilingual build
+  dir: multilingual
+  build: true
+  compare: _expected _site

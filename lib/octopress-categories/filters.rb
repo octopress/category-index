@@ -15,8 +15,7 @@ module Octopress
 
         categories = categories.sort!.map do |category|
           category_dir = plugin.category_dir(category)
-          # Make sure the category directory begins with a slash.
-          category_dir = "/#{category_dir}" unless category_dir =~ /^\//
+          
           if language
             category_dir = "/#{language}#{category_dir}"
           end

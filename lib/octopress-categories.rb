@@ -69,6 +69,8 @@ module Octopress
 
       def category_dir(category)
         category_base_dir = config['category_dir'].gsub(/^\/*(.*)\/*$/, '\1')
+        # Make sure the category directory begins with a slash.
+        category_base_dir = "/#{category_base_dir}" unless category_base_dir =~ /^\//
         File.join(category_base_dir, slugifyCategory(category))
       end
 
@@ -88,6 +90,6 @@ Octopress::Ink::Plugins.register_plugin(Octopress::Categories::Plugin,{
                                           type:          "plugin",
                                           version:       Octopress::Categories::VERSION,
                                           description:   "Category pages for Octopress and Jekyll pages.",                                # What does your theme/plugin do?
-                                          source_url:    "https://github.com/drallgood/octopress-categories", 
+                                          source_url:    "https://github.com/drallgood/octopress-categories",
                                           website:       "https://github.com/drallgood/octopress-categories"                                 # Optional project website
 })

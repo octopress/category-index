@@ -2,7 +2,7 @@ module Octopress
   module Categories
     class CategoryPageAsset < Ink::Assets::PageAsset
 
-      attr_accessor :category
+      attr_accessor :category 
 
       def initialize(plugin, template, category)
         super(plugin, template.base, template.file)
@@ -23,7 +23,7 @@ module Octopress
         name = permalink_name << page.ext
         message.sub!(/#{name}\s*/, permalink_name.ljust(35))
         message.sub!(/#{filename}\s*/, filename.ljust(35))
-        message.sub!(/\.\/#{filename}*/, "#{@plugin.slug}/layouts/#{filename}")
+        message.sub!(/\.\/#{filename}*/, "#{@plugin.slug}/includes/#{filename}")
         message
       end
 
@@ -52,6 +52,7 @@ module Octopress
                        "description"=>"#{meta_description_prefix}#{category.capitalize}"
         })
         @category = category
+        @category_dir = plugin.category_dir(category)
       end
 
       private
