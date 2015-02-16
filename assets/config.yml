@@ -1,7 +1,9 @@
-category_dir: categories
-prefixes:
-  title: "Category: "
-  meta_description: "Category: "
+categories: []
+layout: page
+dir: categories
+
+title: "Category: "
+
 feed:
   enabled: false
   count: 5
