@@ -19,8 +19,6 @@ module Octopress
     
     class Plugin < Ink::Plugin
 
-      attr_reader :category_pages
-
       def register
         super
         if Octopress::Ink.enabled?
@@ -35,19 +33,39 @@ module Octopress
           l.file == "category_index.html"
         }
 
-        created_pages = []
+        @category_pages = []
         if defined?(Octopress::Multilingual) && Octopress.site.config['lang']
+          # Ensure multilingual pages are set up for `ink list` view
+          Octopress.site.read if Octopress.site.posts.empty?
+          
           # We need to create pages for each language
           Octopress.site.languages.each do |lang|
-            category_pages_lang = createCategoryPages(template, lang)
-            created_pages.concat(category_pages_lang)
+            @category_pages.concat(createCategoryPages(template, lang))
           end
         else
-          created_pages = createCategoryPages(template)
+          @category_pages = createCategoryPages(template)
         end
-        
 
-        Octopress.site.pages.concat(created_pages)
+        Octopress.site.pages.concat(@category_pages)
+      end
+
+      def assets_list(options)
+        message = super
+        message << category_pages_list
+      end
+
+      def category_pages_list
+        pages = @category_pages.group_by {|p| p.data['lang'] }
+        message = ""
+        pages.each do |lang, pages|
+          message << " Category pages:#{(lang.nil? ? '' : " (#{Octopress::Multilingual.language_name(lang)})")}\n"
+          pages.each do |page|
+            message << "  - #{page.data['category'].ljust(35)} #{page.path.sub('index.html', '')}\n"
+          end
+          message << "\n"
+        end
+
+        message
       end
 
       def createCategoryPages(template, lang=nil)
@@ -58,6 +76,7 @@ module Octopress
           page = CategoryPage.new(Octopress.site, File.dirname(template.path), '.', File.basename(template.path))
           page.data['category'] = category
           page.data['layout'] = config(lang)['layout']
+          page.name = 'index.html'
           page.dir = category_dir(category, lang)
           page.data['lang'] = lang
           page.data['title'] = config(lang)['title'] + category
@@ -66,11 +85,6 @@ module Octopress
           categoryPages << page
         end
         categoryPages
-      end
-
-      def add_asset_files(options)
-        options << "category-pages"
-        super
       end
 
       def category_dir(category, lang=nil)
