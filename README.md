@@ -1,7 +1,5 @@
 # Categories
 
-TODO: Write a gem description
-
 [![Build Status](http://img.shields.io/travis/octopress/categories.svg)](https://travis-ci.org/octopress/categories)
 [![Gem Version](http://img.shields.io/gem/v/octopress-categories.svg)](https://rubygems.org/gems/octopress-categories)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://octopress.mit-license.org)
@@ -55,7 +53,7 @@ Category pages for Octopress and Jekyll pages.
      count: 5
    permalinks:
 
- category-pages:
+ Category indexes:
   - announcements                   /categories/announcements/
 
 ```
@@ -64,9 +62,11 @@ If you have posts written in English and German, and are using [octopress-multil
 your permalinks will automatically be name-spaced by language, like this:
 
 ```
-category-pages:
-  - announcements-de                   /de/categories/announcements/
-  - announcements-en                   /en/categories/announcements/
+ Category indexes: (Deutsch)
+  - announcements                      /de/categories/announcements/
+
+ Category indexes: (English)
+  - announcements                      /en/categories/announcements/
 ```
 
 Octopress Ink can copy all of the plugin's assets to `_plugins/categories/*` where you can override them with your own modifications. This is

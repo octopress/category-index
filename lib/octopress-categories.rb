@@ -58,7 +58,8 @@ module Octopress
         pages = @category_pages.group_by {|p| p.data['lang'] }
         message = ""
         pages.each do |lang, pages|
-          message << " Category pages:#{(lang.nil? ? '' : " (#{Octopress::Multilingual.language_name(lang)})")}\n"
+          lang_msg = (lang.nil? ? '' : " (#{Octopress::Multilingual.language_name(lang)})")
+          message << " Category indexes:#{lang_msg}\n"
           pages.each do |page|
             message << "  - #{page.data['category'].ljust(35)} #{page.path.sub('index.html', '')}\n"
           end
