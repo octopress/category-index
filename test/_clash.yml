@@ -2,9 +2,14 @@
   title: Standard build
   dir: standard
   build: true
-  compare: _expected _site
+  compare: 
+    - _expected/categories _site/categories
+    - _expected/index.html _site/index.html
 - 
   title: Multilingual build
   dir: multilingual
   build: true
-  compare: _expected _site
+  compare: 
+    - _expected/de/kategorien _site/de/kategorien
+    - _expected/en/categories _site/en/categories
+    - _expected/index.html _site/index.html

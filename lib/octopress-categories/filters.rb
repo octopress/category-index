@@ -14,11 +14,7 @@ module Octopress
 
 
         categories = categories.sort!.map do |category|
-          category_dir = plugin.category_dir(category)
-          
-          if language
-            category_dir = "/#{language}#{category_dir}"
-          end
+          category_dir = plugin.category_dir(category, language)
           "<a class='category' href='#{root}#{category_dir}/'>#{category.capitalize}</a>"
         end
 
