@@ -1,7 +1,6 @@
 require 'octopress-ink'
 require 'octopress-categories/version'
-#require 'octopress-categories/page_asset'
-require 'octopress-categories/filters'
+require 'octopress-categories/tags'
 
 module Octopress
   module Categories
@@ -58,11 +57,18 @@ module Octopress
         pages = @category_pages.group_by {|p| p.data['lang'] }
         message = ""
         pages.each do |lang, pages|
-          lang_msg = (lang.nil? ? '' : " (#{Octopress::Multilingual.language_name(lang)})")
-          message << " Category indexes:#{lang_msg}\n"
+          message << " Category indexes:"
+
+          if multilingual?
+            message << (lang.nil? ? '' : " (#{Octopress::Multilingual.language_name(lang)})")
+          end
+
+          message << "\n"
+
           pages.each do |page|
             message << "  - #{page.data['category'].ljust(35)} #{page.path.sub('index.html', '')}\n"
           end
+
           message << "\n"
         end
 
@@ -71,16 +77,22 @@ module Octopress
 
       def createCategoryPages(template, lang=nil)
         categoryPages = []
-        c = config(lang)
-        categories = c['categories'] || Octopress.site.categories.keys
+        lang = nil unless multilingual?
+        config = self.config(lang)
+
+        categories = config['categories'] || Octopress.site.categories.keys
         categories.each do |category|
           page = CategoryPage.new(Octopress.site, File.dirname(template.path), '.', File.basename(template.path))
-          page.data['category'] = category
-          page.data['layout'] = config(lang)['layout']
+          page.data.merge!({
+            'category' => category,
+            'layout' => config['layout'],
+            'lang' => lang,
+            'title' => config['title'] + category,
+          })
+
           page.name = 'index.html'
           page.dir = category_dir(category, lang)
-          page.data['lang'] = lang
-          page.data['title'] = config(lang)['title'] + category
+
           page.process('index.html')
 
           categoryPages << page
@@ -89,8 +101,13 @@ module Octopress
       end
 
       def category_dir(category, lang=nil)
-        category_base_dir = config(lang)['dir'].gsub(/^\/*(.*)\/*$/, '\1')
+        lang = nil unless multilingual?
+        category_base_dir = self.config(lang)['dir'].gsub(/^\/*(.*)\/*$/, '\1')
         File.join('/', lang || '', category_base_dir, slugifyCategory(category))
+      end
+
+      def multilingual?
+        (defined?(Octopress::Multilingual) && !Octopress.site.config['lang'].nil?)
       end
 
       def slugifyCategory(category)
