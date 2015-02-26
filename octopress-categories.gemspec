@@ -6,9 +6,9 @@ require 'octopress-categories/version'
 Gem::Specification.new do |spec|
   spec.name          = "octopress-categories"
   spec.version       = Octopress::Categories::VERSION
-  spec.authors       = ["Patrice Brend'amour"]
-  spec.email         = ["patrice@brendamour.net"]
-  spec.summary       = %q{Category pages for Octopress and Jekyll pages.}
+  spec.authors       = ["Brandon Mathis","Patrice Brend'amour"]
+  spec.email         = ["brandon@imathis.com", "patrice@brendamour.net"]
+  spec.summary       = %q{Index pages for Octopress/Jekyll categories.}
   spec.homepage      = ""
   spec.license       = "MIT"
 

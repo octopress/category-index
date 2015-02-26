@@ -125,6 +125,6 @@ Octopress::Ink::Plugins.register_plugin(Octopress::Categories::Plugin, {
   type:          "plugin",
   version:       Octopress::Categories::VERSION,
   description:   "Category pages for Octopress and Jekyll pages.",
-  source_url:    "https://github.com/drallgood/octopress-categories",
-  website:       "https://github.com/drallgood/octopress-categories"
+  source_url:    "https://github.com/octopress/category-index",
+  website:       "https://github.com/octopress/category-index"
 })
