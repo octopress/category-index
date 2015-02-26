@@ -28,7 +28,7 @@ module Octopress
       def add_category_pages
 
         # Find the correct template
-        template = @includes.find { |l|
+        template = @templates.find { |l|
           l.file == "category_index.html"
         }
 
