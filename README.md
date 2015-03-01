@@ -1,8 +1,10 @@
 # Categories
 
-[![Build Status](http://img.shields.io/travis/octopress/categories.svg)](https://travis-ci.org/octopress/categories)
+[![Build Status](http://img.shields.io/travis/octopress/category-index.svg)](https://travis-ci.org/octopress/category-index)
 [![Gem Version](http://img.shields.io/gem/v/octopress-categories.svg)](https://rubygems.org/gems/octopress-categories)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://octopress.mit-license.org)
+
+**!!! This is a work in progress. Use at your own discretion!!!** 
 
 ## Installation
 
@@ -35,39 +37,31 @@ For multilingual category pages, install [octopress-multilingual](https://github
 To list detailed information about this plugin, run `$ octopress ink list categories`. This will output something like this:
 
 ```
-Plugin: Octopress Categories - v0.0.1
+Plugin: Octopress Categories - v0.0.2
 Slug: categories
 Category pages for Octopress and Jekyll pages.
+https://github.com/octopress/category-index
 ================================================================================
  includes:
   - category_feed.xml
   - category_index.html
 
  config:
-   category_dir: "categories"
-   prefixes: 
-     title: "Category: "
-     meta_description: "Category: "
+   categories: [
+ 
+   ]
+   layout: "page"
+   dir: "categories"
+   title: "Category: "
    feed: 
      enabled: false
      count: 5
-   permalinks:
-
- Category indexes:
-  - announcements                   /categories/announcements/
 
 ```
 
 If you have posts written in English and German, and are using [octopress-multilingual](https://github.com/octopress/multilingual),
-your permalinks will automatically be name-spaced by language, like this:
+your permalinks will automatically be name-spaced by language.
 
-```
- Category indexes: (Deutsch)
-  - announcements                      /de/categories/announcements/
-
- Category indexes: (English)
-  - announcements                      /en/categories/announcements/
-```
 
 Octopress Ink can copy all of the plugin's assets to `_plugins/categories/*` where you can override them with your own modifications. This is
 only necessary if you want to modify this plugin's behavior.
@@ -80,22 +74,24 @@ This will copy the plugin's configuration and includes from the gem, to your loc
 
 If you want to revert to the defaults, simply delete any file you don't care to override from the `_plugins/categories/` directory.
 
-## Linking to the category pages
-
-This plugin includes a handy filter `category_links` that allows you to automatically link to a post's category pages.
-Here's how you use it:
+## Listing a post's categories
+In order to create a list of a post's categories, you can use the provided ´category_list` tag:
 
 ```
-{% capture num_categories %}{% if post %}{{ post.categories | size }}{% else %}{{ page.categories | size }}{% endif %}{% endcapture %}
-{% unless num_categories == '0' %}
-<span class="categories">
-  {% if post %}
-    {{ post.categories | category_links }}
-  {% else %}
-    {{ page.categories | category_links }}
-  {% endif %}
-</span>
-{% endunless %}
+{% for post in site.posts %}
+	{{post.title}}: {% category_list post %}
+{% endfor %}
+
+```
+
+## Linking to the category pages
+
+This plugin also includes a handy tag `categories` that allows you to create that same list of categories, but also adds links to the category index pages for each of them:
+
+```
+{% for post in site.posts %}
+	{{post.title}}: {% categories post %}
+{% endfor %}
 
 ```
 
@@ -111,7 +107,7 @@ This will create a configuration file populated with the defaults for this plugi
 
 ## Contributing
 
-1. Fork it ( https://github.com/drallgood/octopress-categories/fork )
+1. Fork it ( https://github.com/octopress/category-index/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
