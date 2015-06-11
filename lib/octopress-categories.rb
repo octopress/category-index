@@ -28,7 +28,7 @@ module Octopress
       def add_category_pages
 
         # Find the correct template
-        template = @includes.find { |l|
+        template = @templates.find { |l|
           l.file == "category_index.html"
         }
 
@@ -80,7 +80,12 @@ module Octopress
         lang = nil unless multilingual?
         config = self.config(lang)
 
-        categories = config['categories'] || Octopress.site.categories.keys
+        if config['categories'].size > 0
+          categories = config['categories']
+        else 
+          categories =  Octopress.site.categories.keys  
+        end
+        
         categories.each do |category|
           page = CategoryPage.new(Octopress.site, File.dirname(template.path), '.', File.basename(template.path))
           page.data.merge!({
